@@ -1,0 +1,110 @@
+Source: python-tackerclient
+Section: python
+Priority: optional
+Maintainer: PKG OpenStack <openstack-devel@lists.alioth.debian.org>
+Uploaders: Thomas Goirand <zigo@debian.org>,
+Build-Depends: debhelper (>= 9),
+               dh-python,
+               openstack-pkg-tools (>= 52~),
+               python-all,
+               python-pbr (>= 1.8),
+               python-setuptools,
+               python-sphinx,
+               python3-all,
+               python3-pbr (>= 1.8),
+               python3-setuptools,
+Build-Depends-Indep: python-babel (>= 2.3.4),
+                     python-cliff (>= 1.15.0),
+                     python-iso8601 (>= 0.1.11),
+                     python-keystoneclient (>= 1.7.0),
+                     python-netaddr (>= 0.7.12),
+                     python-oslo.i18n (>= 2.1.0),
+                     python-oslo.utils (>= 3.11.0),
+                     python-oslosphinx (>= 2.5.0),
+                     python-requests (>= 2.10.0),
+                     python-simplejson (>= 2.2.0),
+                     python-six (>= 1.9.0),
+                     python3-babel (>= 2.3.4),
+                     python3-cliff (>= 1.15.0),
+                     python3-iso8601 (>= 0.1.11),
+                     python3-keystoneclient (>= 1.7.0),
+                     python3-netaddr (>= 0.7.12),
+                     python3-oslo.i18n (>= 2.1.0),
+                     python3-oslo.utils (>= 3.11.0),
+                     python3-oslosphinx (>= 2.5.0),
+                     python3-requests (>= 2.10.0),
+                     python3-simplejson (>= 2.2.0),
+                     python3-six (>= 1.9.0),
+Standards-Version: 3.9.8
+Vcs-Browser: https://anonscm.debian.org/cgit/openstack/python-tackerclient.git/
+Vcs-Git: https://anonscm.debian.org/git/openstack/python-tackerclient.git
+Homepage: http://www.openstack.org/
+
+Package: python-tackerclient
+Architecture: all
+Depends: python-babel (>= 2.3.4),
+         python-cliff (>= 1.15.0),
+         python-iso8601 (>= 0.1.11),
+         python-keystoneclient (>= 1.7.0),
+         python-netaddr (>= 0.7.12),
+         python-oslo.i18n (>= 2.1.0),
+         python-oslo.utils (>= 3.11.0),
+         python-oslosphinx (>= 2.5.0),
+         python-pbr (>= 1.8),
+         python-requests (>= 2.10.0),
+         python-simplejson (>= 2.2.0),
+         python-six (>= 1.9.0),
+         ${misc:Depends},
+         ${python:Depends},
+Suggests: python-tackerclient-doc,
+Description: CLI and Client Library for OpenStack Tacker - Python 2.7
+ Tacker is an official OpenStack project building a Generic VNF Manager (VNFM)
+ and a NFV Orchestrator (NFVO) to deploy and operate Network Services and
+ Virtual Network Functions (VNFs) on an NFV infrastructure platform like
+ OpenStack. It is based on ETSI MANO Architectural Framework and provides a
+ functional stack to Orchestrate Network Services end-to-end using VNFs.
+ .
+ This is the client API library for Tacker. This package contains the Python
+ 2.7 module.
+
+Package: python3-python-tackerclient
+Architecture: all
+Depends: python3-babel (>= 2.3.4),
+         python3-cliff (>= 1.15.0),
+         python3-iso8601 (>= 0.1.11),
+         python3-keystoneclient (>= 1.7.0),
+         python3-netaddr (>= 0.7.12),
+         python3-oslo.i18n (>= 2.1.0),
+         python3-oslo.utils (>= 3.11.0),
+         python3-oslosphinx (>= 2.5.0),
+         python3-pbr (>= 1.8),
+         python3-requests (>= 2.10.0),
+         python3-simplejson (>= 2.2.0),
+         python3-six (>= 1.9.0),
+         ${misc:Depends},
+         ${python3:Depends},
+Suggests: python-tackerclient-doc,
+Description: CLI and Client Library for OpenStack Tacker - Python 3.x
+ Tacker is an official OpenStack project building a Generic VNF Manager (VNFM)
+ and a NFV Orchestrator (NFVO) to deploy and operate Network Services and
+ Virtual Network Functions (VNFs) on an NFV infrastructure platform like
+ OpenStack. It is based on ETSI MANO Architectural Framework and provides a
+ functional stack to Orchestrate Network Services end-to-end using VNFs.
+ .
+ This is the client API library for Tacker. This package contains the Python
+ 3.x module.
+
+Package: python-python-tackerclient-doc
+Section: doc
+Architecture: all
+Depends: ${misc:Depends},
+         ${sphinxdoc:Depends},
+Description: CLI and Client Library for OpenStack Tacker - doc
+ Tacker is an official OpenStack project building a Generic VNF Manager (VNFM)
+ and a NFV Orchestrator (NFVO) to deploy and operate Network Services and
+ Virtual Network Functions (VNFs) on an NFV infrastructure platform like
+ OpenStack. It is based on ETSI MANO Architectural Framework and provides a
+ functional stack to Orchestrate Network Services end-to-end using VNFs.
+ .
+ This is the client API library for Tacker. This package contains the
+ documentation.

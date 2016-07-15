@@ -1,0 +1,5 @@
+python-tackerclient (0.4.0-1) unstable; urgency=medium
+
+  * Initial release. (Closes: #831428)
+
+ -- Thomas Goirand <zigo@debian.org>  Fri, 15 Jul 2016 22:21:47 +0200
