@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+if [ "$1" = "remove" ] ; then
+	update-alternatives --remove tacker /usr/bin/python2-tacker
+fi
+
+#DEBHELPER#
+
+exit 0
