@@ -5,5 +5,5 @@ Abstract: Sphinx documentation for python-tackerclient
 Section: Programming/Python
 
 Format: HTML
-Index: /usr/share/doc/python-python-tackerclient-doc/html/index.html
-Files: /usr/share/doc/python-python-tackerclient-doc/html/*
+Index: /usr/share/doc/python-tackerclient-doc/html/index.html
+Files: /usr/share/doc/python-tackerclient-doc/html/*

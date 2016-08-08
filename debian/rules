@@ -38,7 +38,7 @@ endif
 
 override_dh_sphinxdoc:
 ifeq (,$(findstring nodocs, $(DEB_BUILD_OPTIONS)))
-	sphinx-build -b html doc/source debian/python-python-tackerclient-doc/usr/share/doc/python-python-tackerclient-doc/html
+	sphinx-build -b html doc/source debian/python-tackerclient-doc/usr/share/doc/python-tackerclient-doc/html
 	dh_sphinxdoc -O--buildsystem=python_distutils
 endif
 
