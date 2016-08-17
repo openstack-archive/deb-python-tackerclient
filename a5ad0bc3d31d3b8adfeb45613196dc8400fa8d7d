@@ -1,0 +1,10 @@
+Code-Review+2: Sridhar Ramaswamy <srics.r@gmail.com>
+Code-Review+1: Manikantha Srinivas Tadi <manikantha.tadi@gmail.com>
+Code-Review+2: Sripriya Seetharam <sseetha@brocade.com>
+Workflow+1: Sripriya Seetharam <sseetha@brocade.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Sat, 09 Jul 2016 00:20:02 +0000
+Reviewed-on: https://review.openstack.org/332620
+Project: openstack/deb-python-tackerclient
+Branch: refs/heads/master

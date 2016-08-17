@@ -1,0 +1,13 @@
+Code-Review+1: Janki Chhatbar <jchhatba@redhat.com>
+Code-Review+1: dharmendra kushwaha <dharmendra.kushwaha@nectechnologies.in>
+Code-Review+1: Naoya Harada <n-harada@vx.jp.nec.com>
+Code-Review+1: Neeldhwaj Pathak <neeldhwaj.pathak@imaginea.com>
+Code-Review+2: Sridhar Ramaswamy <srics.r@gmail.com>
+Code-Review+2: Sripriya Seetharam <sseetha@brocade.com>
+Workflow+1: Sripriya Seetharam <sseetha@brocade.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Thu, 11 Aug 2016 02:23:41 +0000
+Reviewed-on: https://review.openstack.org/331130
+Project: openstack/deb-python-tackerclient
+Branch: refs/heads/master

@@ -1,0 +1,8 @@
+Code-Review+2: Kanagaraj Manickam <mkr1481@gmail.com>
+Workflow+1: Sridhar Ramaswamy <srics.r@gmail.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Mon, 27 Jun 2016 21:16:31 +0000
+Reviewed-on: https://review.openstack.org/333700
+Project: openstack/deb-python-tackerclient
+Branch: refs/heads/master
