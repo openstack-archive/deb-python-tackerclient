@@ -35,6 +35,9 @@ Build-Depends-Indep: python-babel (>= 2.3.4),
                      python3-requests (>= 2.10.0),
                      python3-simplejson (>= 2.2.0),
                      python3-six (>= 1.9.0),
+                     python3-subunit,
+                     subunit,
+                     testrepository,
 Standards-Version: 3.9.8
 Vcs-Browser: https://anonscm.debian.org/cgit/openstack/python-tackerclient.git/
 Vcs-Git: https://anonscm.debian.org/git/openstack/python-tackerclient.git
