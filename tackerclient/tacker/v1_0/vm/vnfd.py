@@ -15,10 +15,10 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-from __future__ import print_function
-
 from oslo_serialization import jsonutils
+import yaml
 
+from tackerclient.common import utils
 from tackerclient.i18n import _
 from tackerclient.tacker import v1_0 as tackerV10
 
@@ -50,7 +50,7 @@ class CreateVNFD(tackerV10.CreateCommand):
         group.add_argument('--vnfd-file', help='Specify VNFD file')
         group.add_argument('--vnfd', help='Specify VNFD')
         parser.add_argument(
-            '--name',
+            'name', metavar='NAME',
             help='Set a name for the VNFD')
         parser.add_argument(
             '--description',
@@ -58,12 +58,21 @@ class CreateVNFD(tackerV10.CreateCommand):
 
     def args2body(self, parsed_args):
         body = {self.resource: {}}
+        vnfd = None
         if parsed_args.vnfd_file:
             with open(parsed_args.vnfd_file) as f:
                 vnfd = f.read()
-                body[self.resource]['attributes'] = {'vnfd': vnfd}
+                if "tosca_definitions_version" in vnfd:
+                    vnfd = yaml.load(vnfd, Loader=yaml.SafeLoader)
         if parsed_args.vnfd:
-                body[self.resource]['attributes'] = {'vnfd': parsed_args.vnfd}
+                vnfd = parsed_args.vnfd
+                if isinstance(vnfd, str):
+                    vnfd = yaml.load(vnfd, Loader=yaml.SafeLoader)
+                    utils.deprecate_warning(what='yaml as string',
+                                            as_of='N',
+                                            in_favor_of='yaml as dictionary')
+        if vnfd:
+            body[self.resource]['attributes'] = {'vnfd': vnfd}
 
         tackerV10.update_dict(parsed_args, body[self.resource],
                               ['tenant_id', 'name', 'description'])

@@ -14,7 +14,6 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-from oslo_utils import strutils
 import yaml
 
 from tackerclient.common import exceptions
@@ -30,11 +29,7 @@ class ListVIM(tackerV10.ListCommand):
 
     resource = _VIM
     list_columns = ['id', 'tenant_id', 'name', 'type', 'description',
-                    'auth_url', 'placement_attr', 'auth_cred']
-
-    def extend_list(self, data, parsed_args):
-        for index, value in enumerate(data):
-            data[index] = strutils.mask_dict_password(value)
+                    'auth_url', 'placement_attr', 'auth_cred', 'status']
 
 
 class ShowVIM(tackerV10.ShowCommand):
@@ -49,27 +44,28 @@ class CreateVIM(tackerV10.CreateCommand):
     resource = _VIM
 
     def add_known_arguments(self, parser):
-        group = parser.add_mutually_exclusive_group(required=True)
-        group.add_argument('--config-file', help='Specify VIM specific '
-                                                 'config parameters in a file')
-        group.add_argument('--config', help='Specify VIM config parameters '
-                                            'as a direct input')
         parser.add_argument(
-            '--name',
+            '--config-file',
+            required=True,
+            help='Specify VIM specific config parameters in a file')
+        parser.add_argument(
+            'name', metavar='NAME',
             help='Set a name for the VIM')
         parser.add_argument(
             '--description',
             help='Set a description for the VIM')
+        parser.add_argument(
+            '--is-default',
+            action='store_true',
+            default=False,
+            help='Set as default VIM')
 
     def args2body(self, parsed_args):
         body = {self.resource: {}}
         if parsed_args.config_file:
             with open(parsed_args.config_file) as f:
                 vim_config = f.read()
-                config_param = yaml.load(vim_config)
-        if parsed_args.config:
-            parsed_args.config = parsed_args.config.decode('unicode_escape')
-            config_param = yaml.load(parsed_args.config)
+                config_param = yaml.load(vim_config, Loader=yaml.SafeLoader)
         vim_obj = body[self.resource]
         try:
             auth_url = config_param.pop('auth_url')
@@ -81,7 +77,8 @@ class CreateVIM(tackerV10.CreateCommand):
         vim_obj['type'] = config_param.pop('type', 'openstack')
         vim_utils.args2body_vim(config_param, vim_obj)
         tackerV10.update_dict(parsed_args, body[self.resource],
-                              ['tenant_id', 'name', 'description'])
+                              ['tenant_id', 'name', 'description',
+                              'is_default'])
         return body
 
 
@@ -91,13 +88,14 @@ class UpdateVIM(tackerV10.UpdateCommand):
     resource = _VIM
 
     def add_known_arguments(self, parser):
-        group = parser.add_mutually_exclusive_group(required=True)
-        group.add_argument(
+        parser.add_argument(
             '--config-file',
             help='Specify VIM specific config parameters in a file')
-        group.add_argument(
-            '--config',
-            help='Specify VIM config parameters as a direct input')
+        parser.add_argument(
+            '--is-default',
+            action='store_true',
+            default=False,
+            help='Set as default VIM')
 
     def args2body(self, parsed_args):
         body = {self.resource: {}}
@@ -106,16 +104,14 @@ class UpdateVIM(tackerV10.UpdateCommand):
             with open(parsed_args.config_file) as f:
                 config_yaml = f.read()
             config_param = yaml.load(config_yaml)
-        if parsed_args.config:
-            parsed_args.config = parsed_args.config.decode('unicode_escape')
-            config_param = yaml.load(parsed_args.config)
         if 'auth_url' in config_param:
             raise exceptions.TackerClientException(message='Auth URL cannot '
                                                            'be updated',
                                                    status_code=404)
         vim_obj = body[self.resource]
         vim_utils.args2body_vim(config_param, vim_obj)
-        tackerV10.update_dict(parsed_args, body[self.resource], ['tenant_id'])
+        tackerV10.update_dict(parsed_args, body[self.resource],
+                              ['tenant_id', 'is_default'])
         return body
 
 

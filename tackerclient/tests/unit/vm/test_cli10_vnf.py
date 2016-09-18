@@ -32,9 +32,11 @@ ENDURL = 'localurl'
 class CLITestV10VmVNFJSON(test_cli10.CLITestV10Base):
     _RESOURCE = 'vnf'
     _RESOURCES = 'vnfs'
+    _VNF_RESOURCES = 'vnf_resources'
 
     def setUp(self):
-        plurals = {'vnfs': 'vnf'}
+        plurals = {'vnfs': 'vnf',
+                   'resources': 'resource'}
         super(CLITestV10VmVNFJSON, self).setUp(plurals=plurals)
 
     def _test_create_resource(self, resource, cmd,
@@ -91,35 +93,70 @@ class CLITestV10VmVNFJSON(test_cli10.CLITestV10Base):
 
     def test_create_vnf_all_params(self):
         cmd = vnf.CreateVNF(test_cli10.MyApp(sys.stdout), None)
+        name = 'my_name'
         my_id = 'my-id'
         vnfd_id = 'vnfd'
         vim_id = 'vim_id'
+        description = 'my-description'
         region_name = 'region'
         key = 'key'
         value = 'value'
 
         args = [
+            name,
             '--vnfd-id', vnfd_id,
             '--vim-id', vim_id,
+            '--description', description,
             '--vim-region-name', region_name,
             '--%s' % key, value]
-        position_names = ['vnfd_id', 'vim_id', 'attributes']
-        position_values = [vnfd_id, vim_id, {}]
+        position_names = [
+            'name',
+            'vnfd_id',
+            'vim_id',
+            'description',
+            'attributes'
+        ]
+        position_values = [
+            name,
+            vnfd_id,
+            vim_id,
+            description,
+            {}
+        ]
         extra_body = {key: value, 'placement_attr': {'region_name':
                                                      region_name}}
-        self._test_create_resource(self._RESOURCE, cmd, None, my_id,
+        self._test_create_resource(self._RESOURCE, cmd, name, my_id,
                                    args, position_names, position_values,
                                    extra_body=extra_body)
 
     def test_create_vnf_with_mandatory_params(self):
         cmd = vnf.CreateVNF(test_cli10.MyApp(sys.stdout), None)
+        name = 'my_name'
         my_id = 'my-id'
         vnfd_id = 'vnfd'
         args = [
+            name,
             '--vnfd-id', vnfd_id,
         ]
-        position_names = ['vnfd_id', 'attributes']
-        position_values = [vnfd_id, {}]
+        position_names = ['name', 'vnfd_id', 'attributes']
+        position_values = [name, vnfd_id, {}]
+        self._test_create_resource(self._RESOURCE, cmd, name, my_id,
+                                   args, position_names, position_values)
+
+    def test_create_vnf_with_description_param(self):
+        cmd = vnf.CreateVNF(test_cli10.MyApp(sys.stdout), None)
+        name = 'my_name'
+        my_id = 'my-id'
+        vnfd_id = 'vnfd'
+        description = 'my-description'
+        args = [
+            name,
+            '--vnfd-id', vnfd_id,
+            '--description', description,
+        ]
+        position_names = ['name', 'vnfd_id', 'description',
+                          'attributes']
+        position_values = [name, vnfd_id, description, {}]
         self._test_create_resource(self._RESOURCE, cmd, None, my_id,
                                    args, position_names, position_values)
 
@@ -157,3 +194,16 @@ class CLITestV10VmVNFJSON(test_cli10.CLITestV10Base):
         my_id = 'my-id'
         args = [my_id]
         self._test_delete_resource(self._RESOURCE, cmd, my_id, args)
+
+    def test_list_vnf_resources(self):
+        cmd = vnf.ListVNFResources(test_cli10.MyApp(sys.stdout), None)
+        base_args = [self.test_id]
+        response = [{'name': 'CP11', 'id': 'id1', 'type': 'NeutronPort'},
+                    {'name': 'CP12', 'id': 'id2', 'type': 'NeutronPort'}]
+        val = self._test_list_sub_resources(self._VNF_RESOURCES, 'resources',
+                                            cmd, self.test_id,
+                                            response_contents=response,
+                                            detail=True, base_args=base_args)
+        self.assertIn('id1', val)
+        self.assertIn('NeutronPort', val)
+        self.assertIn('CP11', val)

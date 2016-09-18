@@ -25,7 +25,6 @@ from cliff.formatters import table
 from cliff import lister
 from cliff import show
 from oslo_serialization import jsonutils
-from oslo_utils import strutils
 import six
 
 from tackerclient.common._i18n import _
@@ -50,8 +49,10 @@ def _get_resource_plural(resource, client):
 def find_resourceid_by_id(client, resource, resource_id):
     resource_plural = _get_resource_plural(resource, client)
     obj_lister = getattr(client, "list_%s" % resource_plural)
-    # perform search by id only if we are passing a valid UUID
-    match = re.match(UUID_PATTERN, resource_id)
+    if resource == 'event':
+        match = resource_id.isdigit() and resource_id != 0
+    else:
+        match = re.match(UUID_PATTERN, resource_id)
     collection = resource_plural
     if match:
         data = obj_lister(id=resource_id, fields='id')
@@ -386,8 +387,6 @@ class TackerCommand(command.OpenStackCommand):
     def format_output_data(self, data):
         # Modify data to make it more readable
         if self.resource in data:
-            data[self.resource] = strutils.mask_dict_password(
-                data[self.resource])
             for k, v in six.iteritems(data[self.resource]):
                 if isinstance(v, list):
                     value = '\n'.join(jsonutils.dumps(
@@ -429,7 +428,7 @@ class CreateCommand(TackerCommand, show.ShowOne):
         return parser
 
     def get_data(self, parsed_args):
-        self.log.debug('get_data(%s)' % parsed_args)
+        self.log.debug('get_data(%s)', parsed_args)
         tacker_client = self.get_client()
         tacker_client.format = parsed_args.request_format
         _extra_values = parse_args_to_dict(self.values_specs)
@@ -649,6 +648,10 @@ class ShowCommand(TackerCommand, show.ShowOne):
     log = None
     allow_names = True
 
+    def get_id(self):
+        if self.resource:
+            return self.resource.upper()
+
     def get_parser(self, prog_name):
         parser = super(ShowCommand, self).get_parser(prog_name)
         add_show_list_common_argument(parser)
@@ -657,7 +660,7 @@ class ShowCommand(TackerCommand, show.ShowOne):
         else:
             help_str = _('ID of %s to look up')
         parser.add_argument(
-            'id', metavar=self.resource.upper(),
+            'id', metavar=self.get_id(),
             help=help_str % self.resource)
         return parser
 

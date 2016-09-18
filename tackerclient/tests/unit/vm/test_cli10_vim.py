@@ -16,8 +16,8 @@
 
 import sys
 
-import mox
-
+from tackerclient.common import exceptions
+from tackerclient.common import utils
 from tackerclient.tacker.v1_0.nfvo import vim
 from tackerclient.tests.unit import test_cli10
 
@@ -34,82 +34,83 @@ class CLITestV10VIMJSON(test_cli10.CLITestV10Base):
     def setUp(self):
         plurals = {'vims': 'vim'}
         super(CLITestV10VIMJSON, self).setUp(plurals=plurals)
-        self.vim_project = {'name': 'abc', 'id': ''}
+        self.vim_project = {
+            'name': 'abc', 'id': '',
+            'project_domain_name': 'prj_domain_name'}
         self.auth_cred = {'username': 'xyz', 'password': '12345', 'user_id':
-                          ''}
+                          '', 'user_domain_name': 'user_domain_name'}
         self.auth_url = 'http://1.2.3.4:5000'
 
     def test_register_vim_all_params(self):
         cmd = vim.CreateVIM(test_cli10.MyApp(sys.stdout), None)
+        name = 'my-name'
         my_id = 'my-id'
-        name = 'test_vim'
         description = 'Vim Description'
-        vim_config = {'auth_url': 'http://1.2.3.4:5000', 'username': 'xyz',
-                      'password': '12345', 'project_name': 'abc'}
+        vim_config = utils.get_file_path(
+            'tests/unit/vm/samples/vim_config.yaml')
         args = [
-            '--config', str(vim_config),
-            '--name', name,
+            name,
+            '--config-file', vim_config,
             '--description', description]
         position_names = ['auth_cred', 'vim_project', 'auth_url']
-        position_values = [self.auth_cred, self.vim_project, self.auth_url]
-        extra_body = {'type': 'openstack', 'name': name, 'description':
-                      description}
+        position_values = [self.auth_cred, self.vim_project,
+                           self.auth_url]
+        extra_body = {'type': 'openstack', 'name': name,
+                      'description': description, 'is_default': False}
         self._test_create_resource(self._RESOURCE, cmd, None, my_id,
                                    args, position_names, position_values,
                                    extra_body=extra_body)
 
-    def test_register_vim_with_mandatory_params(self):
+    def test_register_vim_with_no_auth_url(self):
         cmd = vim.CreateVIM(test_cli10.MyApp(sys.stdout), None)
         my_id = 'my-id'
-
-        vim_config = {'auth_url': 'http://1.2.3.4:5000', 'username': 'xyz',
-                      'password': '12345', 'project_name': 'abc'}
+        name = 'test_vim'
+        description = 'Vim Description'
+        vim_config = utils.get_file_path(
+            'tests/unit/vm/samples/vim_config_without_auth_url.yaml')
         args = [
-            '--config', str(vim_config),
+            name,
+            '--config-file', vim_config,
+            '--description', description]
+        position_names = ['auth_cred', 'vim_project', 'auth_url']
+        position_values = [self.auth_cred, self.vim_project,
+                           self.auth_url]
+        extra_body = {'type': 'openstack', 'name': name,
+                      'description': description, 'is_default': False}
+        message = 'Auth URL must be specified'
+        ex = self.assertRaises(exceptions.TackerClientException,
+                               self._test_create_resource,
+                               self._RESOURCE, cmd, None, my_id, args,
+                               position_names, position_values,
+                               extra_body=extra_body)
+        self.assertEqual(message, ex.message)
+        self.assertEqual(404, ex.status_code)
+
+    def test_register_vim_with_mandatory_params(self):
+        cmd = vim.CreateVIM(test_cli10.MyApp(sys.stdout), None)
+        name = 'my-name'
+        my_id = 'my-id'
+
+        vim_config = utils.get_file_path(
+            'tests/unit/vm/samples/vim_config.yaml')
+        args = [
+            name,
+            '--config-file', vim_config,
         ]
         position_names = ['auth_cred', 'vim_project', 'auth_url']
-        position_values = [self.auth_cred, self.vim_project, self.auth_url]
-        extra_body = {'type': 'openstack'}
-        self._test_create_resource(self._RESOURCE, cmd, None, my_id, args,
+        position_values = [
+            self.auth_cred,
+            self.vim_project,
+            self.auth_url
+        ]
+        extra_body = {'type': 'openstack', 'name': name, 'is_default': False}
+        self._test_create_resource(self._RESOURCE, cmd, name, my_id, args,
                                    position_names, position_values,
                                    extra_body=extra_body)
 
     def test_list_vims(self):
         cmd = vim.ListVIM(test_cli10.MyApp(sys.stdout), None)
         self._test_list_resources(self._RESOURCES, cmd, True)
-
-    def _test_list_vims_extend(self, data, expected_data, args=['-f', 'json']):
-        resp_str = self.client.serialize({self._RESOURCES: data})
-        resp = (test_cli10.MyResp(200), resp_str)
-        cmd = vim.ListVIM(
-            test_cli10.MyApp(sys.stdout), None)
-        self.mox.StubOutWithMock(cmd, "get_client")
-        self.mox.StubOutWithMock(self.client.httpclient, "request")
-
-        cmd.get_client().MultipleTimes().AndReturn(self.client)
-        path = getattr(self.client, self._RESOURCES + '_path')
-        self.client.httpclient.request(test_cli10.MyUrlComparator(
-            test_cli10.end_url(path, format=self.format), self.client),
-            'GET', body=None, headers=mox.ContainsKeyValue(
-                'X-Auth-Token', test_cli10.TOKEN)).AndReturn(resp)
-        self.mox.ReplayAll()
-        cmd_parser = cmd.get_parser("list_" + self._RESOURCES)
-        parsed_args = cmd_parser.parse_args(args)
-        result = cmd.take_action(parsed_args)
-        res_data = [res for res in result[1]]
-        self.mox.VerifyAll()
-        self.mox.UnsetStubs()
-        for res, exp in zip(res_data, expected_data):
-            self.assertEqual(len(exp), len(res))
-            self.assertEqual(exp, res)
-
-    def test_list_vims_extend(self):
-        vim_data = [{'id': 'my_id1', 'auth_cred': {'password':
-                     'encrypted_pw'}}, {'id': 'my_id2', 'auth_cred': {
-                                        'password': 'another_encrypted_pw'}}]
-        expected_data = [('my_id1', {'password': '***'}),
-                         ('my_id2', {'password': '***'})]
-        self._test_list_vims_extend(vim_data, expected_data)
 
     def test_show_vim_id(self):
         cmd = vim.ShowVIM(test_cli10.MyApp(sys.stdout), None)
@@ -125,13 +126,13 @@ class CLITestV10VIMJSON(test_cli10.CLITestV10Base):
 
     def test_update_vim(self):
         cmd = vim.UpdateVIM(test_cli10.MyApp(sys.stdout), None)
-        update_config = {'username': 'xyz', 'password': '12345',
-                         'project_name': 'abc'}
+        update_config = utils.get_file_path(
+            'tests/unit/vm/samples/vim_config_without_auth_url.yaml')
         my_id = 'my-id'
-        key = 'config'
+        key = 'config-file'
         value = str(update_config)
         extra_fields = {'vim_project': self.vim_project, 'auth_cred':
-                        self.auth_cred}
+                        self.auth_cred, 'is_default': False}
         self._test_update_resource(self._RESOURCE, cmd, my_id, [my_id,
                                                                 '--%s' %
                                                                 key, value],
