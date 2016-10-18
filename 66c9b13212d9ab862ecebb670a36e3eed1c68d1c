@@ -1,0 +1,10 @@
+Code-Review+2: gongysh <gong.yongsheng@99cloud.net>
+Code-Review+1: venkatamahesh <Venkata.Kotha@infinite.com>
+Code-Review+2: Sripriya Seetharam <sseetha@brocade.com>
+Workflow+1: Sripriya Seetharam <sseetha@brocade.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Tue, 18 Oct 2016 04:08:29 +0000
+Reviewed-on: https://review.openstack.org/378211
+Project: openstack/deb-python-tackerclient
+Branch: refs/heads/master
