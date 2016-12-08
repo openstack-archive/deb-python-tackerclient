@@ -1,0 +1,12 @@
+Code-Review+2: Kanagaraj Manickam <mkr1481@gmail.com>
+Code-Review+1: dharmendra kushwaha <dharmendra.kushwaha@nectechnologies.in>
+Code-Review+1: venkatamahesh <Venkata.Kotha@infinite.com>
+Code-Review+1: Manikantha Srinivas Tadi <manikantha.tadi@gmail.com>
+Code-Review+2: Sridhar Ramaswamy <srics.r@gmail.com>
+Workflow+1: Sridhar Ramaswamy <srics.r@gmail.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Mon, 05 Dec 2016 20:00:10 +0000
+Reviewed-on: https://review.openstack.org/392113
+Project: openstack/deb-python-tackerclient
+Branch: refs/heads/master
