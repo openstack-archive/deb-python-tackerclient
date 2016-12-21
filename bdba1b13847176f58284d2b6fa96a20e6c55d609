@@ -1,0 +1,11 @@
+Code-Review+2: Sridhar Ramaswamy <srics.r@gmail.com>
+Code-Review+1: dharmendra kushwaha <dharmendra.kushwaha@nectechnologies.in>
+Code-Review+1: venkatamahesh <Venkata.Kotha@infinite.com>
+Code-Review+2: Bob Haddleton <bob.haddleton@nokia.com>
+Workflow+1: Bob Haddleton <bob.haddleton@nokia.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Wed, 21 Dec 2016 01:57:52 +0000
+Reviewed-on: https://review.openstack.org/390441
+Project: openstack/deb-python-tackerclient
+Branch: refs/heads/master
