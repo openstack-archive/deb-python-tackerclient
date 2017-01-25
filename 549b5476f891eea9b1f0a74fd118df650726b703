@@ -1,0 +1,8 @@
+Code-Review+2: Sridhar Ramaswamy <srics.r@gmail.com>
+Workflow+1: Sridhar Ramaswamy <srics.r@gmail.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Wed, 25 Jan 2017 00:48:44 +0000
+Reviewed-on: https://review.openstack.org/424881
+Project: openstack/deb-python-tackerclient
+Branch: refs/heads/stable/ocata
