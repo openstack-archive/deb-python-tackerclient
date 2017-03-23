@@ -1,0 +1,9 @@
+Code-Review+2: gongysh <gong.yongsheng@99cloud.net>
+Code-Review+2: Sridhar Ramaswamy <srics.r@gmail.com>
+Workflow+1: Sridhar Ramaswamy <srics.r@gmail.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Mon, 13 Mar 2017 19:50:56 +0000
+Reviewed-on: https://review.openstack.org/443115
+Project: openstack/deb-python-tackerclient
+Branch: refs/heads/master

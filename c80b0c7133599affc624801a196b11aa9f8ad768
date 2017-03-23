@@ -1,0 +1,9 @@
+Code-Review+2: gongysh <gong.yongsheng@99cloud.net>
+Code-Review+2: bharaththiruveedula <bharath_ves@hotmail.com>
+Workflow+1: bharaththiruveedula <bharath_ves@hotmail.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Mon, 13 Mar 2017 09:52:01 +0000
+Reviewed-on: https://review.openstack.org/444784
+Project: openstack/deb-python-tackerclient
+Branch: refs/heads/master
