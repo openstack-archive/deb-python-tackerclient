@@ -1,0 +1,8 @@
+Code-Review+2: dharmendra kushwaha <dharmendra.kushwaha@nectechnologies.in>
+Workflow+1: dharmendra kushwaha <dharmendra.kushwaha@nectechnologies.in>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Fri, 28 Apr 2017 19:23:03 +0000
+Reviewed-on: https://review.openstack.org/460265
+Project: openstack/deb-python-tackerclient
+Branch: refs/heads/master
