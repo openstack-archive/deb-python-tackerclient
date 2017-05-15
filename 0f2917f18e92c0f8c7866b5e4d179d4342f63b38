@@ -1,0 +1,8 @@
+Code-Review+2: Bob Haddleton <bob.haddleton@nokia.com>
+Workflow+1: Bob Haddleton <bob.haddleton@nokia.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Mon, 15 May 2017 02:09:47 +0000
+Reviewed-on: https://review.openstack.org/464482
+Project: openstack/deb-python-tackerclient
+Branch: refs/heads/master
