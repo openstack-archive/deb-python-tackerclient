@@ -1,0 +1,12 @@
+Code-Review+2: gongysh <gong.yongsheng@99cloud.net>
+Code-Review+1: Trinath Somanchi <trinath.somanchi@nxp.com>
+Code-Review+1: Yan Xing an <yanxingan@cmss.chinamobile.com>
+Code-Review+2: Sridhar Ramaswamy <srics.r@gmail.com>
+Code-Review+1: Bao Fangyan <baofangyan@cmss.chinamobile.com>
+Workflow+1: gongysh <gong.yongsheng@99cloud.net>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Wed, 24 May 2017 01:33:41 +0000
+Reviewed-on: https://review.openstack.org/466602
+Project: openstack/deb-python-tackerclient
+Branch: refs/heads/master
