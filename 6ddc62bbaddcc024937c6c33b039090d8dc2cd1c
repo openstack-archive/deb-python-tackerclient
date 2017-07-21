@@ -1,0 +1,9 @@
+Code-Review+1: Trinath Somanchi <trinath.somanchi@nxp.com>
+Code-Review+2: dharmendra kushwaha <dharmendra.kushwaha@nectechnologies.in>
+Workflow+1: dharmendra kushwaha <dharmendra.kushwaha@nectechnologies.in>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Fri, 21 Jul 2017 03:08:54 +0000
+Reviewed-on: https://review.openstack.org/484586
+Project: openstack/deb-python-tackerclient
+Branch: refs/heads/master
