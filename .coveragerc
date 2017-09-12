@@ -1,7 +1,0 @@
-[run]
-branch = True
-source = tackerclient
-omit = tackerclient/openstack/*,tackerclient/tests/*
-
-[report]
-ignore_errors = True
